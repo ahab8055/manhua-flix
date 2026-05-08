@@ -1,0 +1,13 @@
+{
+  "name": "@manhua-flix/config-prettier",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "prettier": "^3.3.0"
+  }
+}

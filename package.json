@@ -1,0 +1,20 @@
+{
+  "name": "manhua-flix",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r --filter './packages/*' build && pnpm -r --filter './apps/*' build",
+    "lint": "pnpm -r --parallel lint",
+    "type-check": "pnpm -r --parallel type-check",
+    "clean": "pnpm -r --parallel clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.1.2"
+}

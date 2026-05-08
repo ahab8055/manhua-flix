@@ -1,0 +1,7 @@
+{
+  "name": "@manhua-flix/config-typescript",
+  "version": "0.0.1",
+  "private": true,
+  "files": ["*.json"],
+  "license": "MIT"
+}

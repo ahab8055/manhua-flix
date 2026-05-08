@@ -1,0 +1,6 @@
+[submodule "apps/admin"]
+	path = apps/admin
+	url = ./apps/admin
+[submodule "apps/backend"]
+	path = apps/backend
+	url = ./apps/backend
