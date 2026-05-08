@@ -1,6 +1,8 @@
 [submodule "apps/admin"]
 	path = apps/admin
-	url = ./apps/admin
+	url = https://github.com/ahab8055/manhua-flix-admin.git
+	branch = main
 [submodule "apps/backend"]
 	path = apps/backend
-	url = ./apps/backend
+	url = https://github.com/ahab8055/manhua-flix-backend.git
+	branch = main
