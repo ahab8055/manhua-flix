@@ -6,3 +6,7 @@
 	path = apps/backend
 	url = https://github.com/ahab8055/manhua-flix-backend.git
 	branch = main
+[submodule "apps/mobile"]
+	path = apps/mobile
+	url = https://github.com/ahab8055/manhua-mobile.git
+	branch = main
