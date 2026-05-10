@@ -1,6 +1,7 @@
+import tseslint from "typescript-eslint";
 import baseConfig from "./base.js";
 
-const config = [
+export default tseslint.config(
   ...baseConfig,
   {
     rules: {
@@ -10,6 +11,4 @@ const config = [
       "@typescript-eslint/no-explicit-any": "error",
     },
   },
-];
-
-export default config;
+);
