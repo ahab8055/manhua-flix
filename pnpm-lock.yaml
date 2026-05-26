@@ -141,6 +141,9 @@ importers:
       firebase-admin:
         specifier: ^13.10.0
         version: 13.10.0
+      google-auth-library:
+        specifier: ^9.15.1
+        version: 9.15.1
       postgres:
         specifier: ^3.4.0
         version: 3.4.9
@@ -6899,7 +6902,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    optional: true
 
   gaxios@7.1.4:
     dependencies:
@@ -6917,7 +6919,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    optional: true
 
   gcp-metadata@8.1.2:
     dependencies:
@@ -7008,7 +7009,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    optional: true
 
   google-gax@4.6.1:
     dependencies:
@@ -7029,8 +7029,7 @@ snapshots:
       - supports-color
     optional: true
 
-  google-logging-utils@0.0.2:
-    optional: true
+  google-logging-utils@0.0.2: {}
 
   google-logging-utils@1.1.3: {}
 
@@ -7045,7 +7044,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    optional: true
 
   has-bigints@1.1.0: {}
 
@@ -7266,8 +7264,7 @@ snapshots:
     dependencies:
       call-bound: 1.0.4
 
-  is-stream@2.0.1:
-    optional: true
+  is-stream@2.0.1: {}
 
   is-string@1.1.1:
     dependencies:
@@ -8634,8 +8631,7 @@ snapshots:
   uuid@8.3.2:
     optional: true
 
-  uuid@9.0.1:
-    optional: true
+  uuid@9.0.1: {}
 
   validator@13.15.35: {}
 
