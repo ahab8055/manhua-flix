@@ -13,6 +13,12 @@ out/
 .env.local
 .env.*.local
 
+# Browser cookie exports (never commit session cookies)
+cookies.txt
+**/cookies.txt
+**/combined_cookies.txt
+**/youtube_cookies.txt
+
 # Logs
 *.log
 npm-debug.log*
