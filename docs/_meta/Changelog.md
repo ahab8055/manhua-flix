@@ -11,6 +11,7 @@ related: ["[[Home]]", "[[Conventions]]"]
 
 Newest first. Format: `- YYYY-MM-DD · area · what changed · [[notes]]`
 
+- 2026-11-11 · meta · Pushed `main`: backend `ed5193d`, mobile `594b96b`, root `23c5fb7` (admin unchanged). Backend deploy needed before the new app build (SeeAll Popular) · [[Redesign-Roadmap]]
 - 2026-11-11 · meta · Steps 16–23 merged (fast-forward) into local `main`: mobile `594b96b`, backend `ed5193d` (pagination sweep); not pushed. Q-04 finding: site is Blogger (ghs.google.com) → can't host `/.well-known/assetlinks.json`; App Links need a separate subdomain (proposed `link.` on Firebase Hosting) · [[Redesign-Roadmap]]
 - 2026-11-11 · mobile · Q-03 resolved: hosted Privacy/Terms URLs + support email set in `.env`/`.env.stage`/`.env.prod` (R-11 done); hosted-policy gaps listed · [[Mobile-Settings]] [[Redesign-Decision-Log]]
 - 2026-11-11 · mobile · Step 23 (R-42): offline-first persisted query cache (MMKV, allowlist, page-1 trim, buster, 3 days, wiped on sign-out), instant boot from cache, Detail/Episode placeholders from list rows, long-list tuning; deps `@tanstack/react-query-persist-client` + `query-sync-storage-persister` 5.100.9 (mobile `594b96b` on `redesign/step-23-offline-cache`; JS only; not merged) · [[ADR-005-persisted-query-cache]] [[Mobile-State]]
