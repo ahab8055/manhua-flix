@@ -3,7 +3,7 @@ type: module
 area: mobile
 status: active
 created: 2026-11-08
-updated: 2026-11-09
+updated: 2026-11-11
 tags: [mobile, navigation]
 related: ["[[Mobile-MOC]]"]
 ---
@@ -27,7 +27,7 @@ Startup: wait 300ms MMKV hydrate → `Promise.allSettled([checkForUpdate(), pref
 | `Notifications` | server history + local inbox |
 | `ChangePassword`, `AboutApp`, `PrivacyPolicy` | |
 | `Settings`, `DeleteAccount` | Step 8, [[Mobile-Settings]]; `DeleteAccount` has `gestureEnabled:false` |
-| `SeeAll {title, items}` | grid of rail |
+| `SeeAll {title, collection}` | paged 3-col grid of a Home rail: `recently-added` / `new-updates` → `GET /home-feed/*?page`, `popular` → `/manhuas/search?sort=popular` (Step 16; no client sort) |
 | `ChannelDetail { channelId, preview? }` | header preview + subscribe, alerts, paged uploads ([[Mobile-Channels]]) |
 | `Login`, `SignUp`, `ForgotPassword {redirectTo?}` | auth then redirect back |
 

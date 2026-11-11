@@ -3,7 +3,7 @@ type: module
 area: mobile
 status: active
 created: 2026-11-08
-updated: 2026-11-09
+updated: 2026-11-11
 tags: [mobile, api]
 related: ["[[Mobile-MOC]]", "[[Backend-API]]"]
 ---
@@ -13,11 +13,14 @@ related: ["[[Mobile-MOC]]", "[[Backend-API]]"]
 - Bearer from MMKV `tokens`. 401 → single shared `refreshInFlight` → `POST /auth/refresh` via separate `refreshClient` → retry once; fail → delete tokens.
 - React Query `providers/AppProvider.tsx`: `staleTime 60s`, `retry 1`; `queryClient` exported.
 - Endpoints: `src/constants/Endpoints.ts` + `src/api/*` (auth, channels, cloudinary, comments, genres, home-feed, manhuas, notifications, rewarded-ads, users, watch-history). Full list → [[Backend-API]]. Uses: auth register/login/google/refresh/forgot; users me profile/password; cloudinary upload; manhuas list/featured/:id/chapters/view/like/recommendations(mixed, detail)/search/suggestions; comments; genres; favorites; search-history; home-feed; watch-progress; watch-history; channels; notifications devices/history/read/preferences; `POST /ads/claim`.
+- Chapters: `fetchPublishedChapters` requests `fields=list` (slim, full list ascending; Detail ranges + Episode nav need all). `Chapter.pageUrls/isPublished/updatedAt` optional (Step 18).
 - Query keys: `['manhuas', …]`, `['manhua', id]`, `['chapters', id]`, `['home-feed', …]`, `['favorites', 'list', sort]` (infinite), `['favorite-status', id]`, `['watch-progress', id]`, `['watch-history','me','list']` (infinite), `['genres']`, `['search-history','me']`, `['channels', …]`, `['notifications', …]`, `['comments', id]`, `['my-profile']`, `['user-profile', id]`.
 - Favorites + subscriptions: optimistic updates with rollback.
 
 ## Query keys + cache sync (redesign Step 4, 2026-11-08)
-- `src/api/query-keys.ts` `queryKeys` mirrors existing keys (numeric ids). New code must use it; legacy call sites migrate per screen.
+- `src/api/query-keys.ts` `queryKeys` mirrors existing keys (numeric ids). **All call sites migrated (Step 19)**; `.eslintrc.js` warns on any inline `queryKey: [...]` outside the factory.
+- `hooks/use-manhua-engagement.ts` (Step 19): the only My List / Like path (Detail + Episode). Optimistic writes to `manhua`, `favorite-status`, `episode-like-status` together, rollback + toast, then `syncManhuaEngagement`. `setLiked(next)` / `setFavorited(next)` take the desired state and check fresh server state first (`POST /like` is a toggle).
+- Views: Detail records `POST /manhuas/:id/view` once per app session per title (module `Set`, retried if the call fails).
 - `src/api/cache-sync.ts`: `syncManhuaEngagement(qc, id)` (manhua, favorite-status, episode-like-status, favorites*, continue-watching, my-profile) and `syncChannelSubscription(qc, id)` (subscription, detail, channel, channels/subscribed*, recommended, sections). Used by Detail/Episode like+favorite and Detail/ChannelDetail subscribe.
 - Episode like/favorite now toast friendly errors (`getFriendlyErrorMessage`).
 - `ENDPOINTS.LOGOUT` + `logoutUser()` added.

@@ -9,7 +9,7 @@ related: ["[[Mobile-MOC]]", "[[Mobile-Theme]]", "[[Redesign-Design-System]]", "[
 ---
 # Mobile UI Kit
 
-Shared components for the redesign (R-03). Import from `@/components/ui` and `@/components/icons`. Tokens only (`tokens` from `@/theme`), no hex/fontSize literals. Screens adopt the kit in Steps 6–15; legacy `Header`, `AppIcons`, `HeaderIcons` remain until then.
+Shared components for the redesign (R-03). Import from `@/components/ui` and `@/components/icons`. Tokens only (`tokens` from `@/theme`), no hex/fontSize literals. All screens use the kit since Step 16; legacy `Header`, `AppIcons`, `HeaderIcons`, `ManhuaPosterCard`, `FeaturedManhuaCard`, `manhua-card-layout`, `utils/manhuaMappers` (+ `RailItem`) deleted.
 
 ## Components (`src/components/ui/`)
 | Component | Use |
@@ -51,6 +51,20 @@ Rule for screens (Steps 6–15): every mutation → pending state + `toast.*` re
 - `<Icon name size color filled />`, 24-box stroke set in `paths.ts` (~45 icons). Decorative by default; pass `accessibilityLabel` for standalone meaning. `filled` = active/selected state. Step 8 added `settings` (gear), `shield`, `info`; Step 10 `sword`, `bolt`; Step 12 `pin`; Step 15 `thumbDown` (thumb rotated 180°), `reply`, `send`. `utils/format.ts` `formatRelativeTime` (Step 15).
 - Media (Step 12): `ChannelRow`, `Avatar` (moved from Profile).
 - Media (Step 9): `MyListRow` (16:9 thumb + progress + ⋯, height `MY_LIST_ROW_HEIGHT`); `PosterCard` `onLongPress` + `longPressActionLabel` (TalkBack custom action).
+
+## Accessibility checklist (Step 22, R-40)
+- Every interactive element: `accessibilityRole` + label (+ `accessibilityState` selected/disabled/busy/expanded).
+- Targets ≥48dp: kit sizes or `hitSlopFor(visualSize)`; gesture-handler areas (player seek) grow the view itself (height 48 + negative margin).
+- Screen/section titles: `accessibilityRole="header"` (TalkBack swipe-by-headings).
+- Images: `CachedImage` is **decorative by default** (hidden from TalkBack); pass `accessibilityLabel` only when the image carries meaning alone.
+- Text only via `AppText` / `TextField` (per-step `maxFontSizeMultiplier`); no raw `<Text>`.
+- Async results: `accessibilityLiveRegion="polite"` (counts, errors, toasts).
+
+## Copy rules (Step 22, R-41, D-45)
+- Video vocabulary: watch / episode / series. Never read, chapter, manhua, "CH.", "Part".
+- "Ep N" in compact meta (rows, Continue, History, EpisodeRow subtitle); "Episode N" in titles, share text and screen-reader labels.
+- Brand: Manhwaflix in sentences, MANHWAFLIX wordmark (D-16).
+- Errors: "Couldn't … Try again." Never show raw SDK / axios / server-dev text — use `getFriendlyErrorMessage(error, fallback)`.
 
 ## Rules
 - Every interactive kit component sets role + label + state, has `testID`, min 48dp target (`hitSlopFor`).

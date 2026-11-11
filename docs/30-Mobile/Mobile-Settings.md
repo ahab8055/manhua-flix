@@ -3,7 +3,7 @@ type: feature
 area: mobile
 status: active
 created: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-11
 tags: [feature, mobile, settings, redesign]
 related: ["[[Account-Deletion]]", "[[Mobile-Navigation]]", "[[Push-Notifications]]", "[[Mobile-Auth]]"]
 ---
@@ -24,4 +24,11 @@ related: ["[[Account-Deletion]]", "[[Mobile-Navigation]]", "[[Push-Notifications
 - `.env.example` is matched by `.gitignore` `.env*` → additions there are local only.
 
 ## Profile changes
+- **About** (Step 16, `AboutAppScreen.tsx`): Wordmark, one-line video copy, version, feature list, rows Rate on Google Play (`openPlayStore`), Privacy, Terms/Contact when env set.
+- **Privacy** (Step 16, `PrivacyPolicyScreen.tsx`): in-app fallback only while `PRIVACY_POLICY_URL` empty. Factual draft (`LAST_UPDATED` const): collected data, Google Sign-In / FCM / AdMob / Cloudinary + "a third-party video hosting provider" (never named, D-30), deletion via in-app request ≤7 days, contact, Delete my account button (signed in). Update `SECTIONS` when data collection changes. Not legal advice; hosted policy (Q-03) is the real one.
 - Removed from `ProfileScreen.tsx`: notification card, guest alert switch, Log Out button, Change password/About/Privacy menu rows, hardcoded `v1.0.0`. Rest untouched until Step 10.
+
+## Legal links live (2026-11-11, Q-03)
+- `PRIVACY_POLICY_URL` = https://manhuaflix.hbhammaddyar.com/p/privacy-policy.html, `TERMS_URL` = https://manhuaflix.hbhammaddyar.com/p/terms-and-conditions.html, `SUPPORT_EMAIL` set (env files are git-ignored; set per machine/CI).
+- Effect: Settings + About open the hosted pages; Terms row + Contact support appear; LegalConsent links Terms; Delete account shows the mailto. In-app `PrivacyPolicyScreen` only when the URL is empty.
+- Hosted policy gaps vs the app (owner to fix on the site): brand spelled "ManhuaFlix" (app = Manhwaflix, D-16); no 7-day deletion window (D-22 says to state it); Cloudinary (profile photos) not named; support email not on the page. Host correctly unnamed (D-30).

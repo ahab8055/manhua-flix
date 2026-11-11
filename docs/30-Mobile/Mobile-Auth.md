@@ -14,7 +14,7 @@ related: ["[[Mobile-MOC]]", "[[Backend-Auth]]", "[[Mobile-UI-Kit]]"]
 ## Auth screens (redesign Step 14, 2026-11-11)
 - Shell `screens/auth/AuthLayout.tsx` (Screen + AppHeader back, Wordmark, title/subtitle, keyboard-aware scroll, footer) + `OrDivider`, `FooterPrompt`. Used by Login, SignUp, ForgotPassword, ChangePassword.
 - Google first (`components/auth/GoogleButton.tsx`, kit Button `leading` slot), then "or", then email form. Kit `TextField` with `autoComplete`/`textContentType`, next→done chaining via refs, `secure` eye.
-- `hooks/use-auth-completion.ts`: `useAuthCompletion(redirectTo)` (store session + reset to redirect / Profile; was duplicated), `useGoogleAuth`, `authErrorMessage` (pending deletion + friendly copy).
+- `hooks/use-auth-completion.ts`: `useAuthCompletion(redirectTo)` (store session; with `redirectTo` → reset to it on top of Home; **without → pop the auth screens and return to where sign-in started**, Profile only if nothing is underneath — Step 17, [[2026-11-11-email-signin-lands-on-profile]]), `useGoogleAuth`, `authErrorMessage` (pending deletion + friendly copy).
 - `services/google-auth.ts`: `GoogleSignInCancelledError` (silent everywhere, incl. AuthPromptSheet), `GoogleSignInError` = user-safe copy. DEVELOPER_ERROR → "Google sign-in isn't available right now. Use email instead." (SHA-1 hint only `__DEV__` console).
 - Consent: `components/auth/LegalConsent.tsx` ("By continuing you agree to the Terms and Privacy Policy", no checkbox) under Login, SignUp and AuthPromptSheet → covers Google sign-up. Terms plain text until `TERMS_URL` set; Privacy falls back to in-app page.
 - SignUp: Name, Email, Password only (D-37); username made by the server. 409 → email field error + "Sign in instead". Live `PasswordRules` (`components/auth/PasswordRules.tsx`) from `SIGNUP_PASSWORD_RULES` (= backend min 8).
@@ -35,4 +35,6 @@ related: ["[[Mobile-MOC]]", "[[Backend-Auth]]", "[[Mobile-UI-Kit]]"]
 ## Guest gating without dead ends
 - `useRequireAuth()` (`src/hooks/use-require-auth.ts`): `requireAuth(action, { reason, redirectTo? })` — signed in runs now; guest opens sheet and **replays `action` after any sign-in** (Google in sheet, or email via Login `redirectTo`).
 - `AuthPromptHost` (`src/components/AuthPromptSheet.tsx`) mounted inside `NavigationContainer`; store `src/store/auth-prompt` (pending action TTL 10 min; "Not now" drops it).
-- Legacy `use-auth-guard.ts` stays until screens migrate (Steps 6–15).
+- Step 17: `use-auth-guard.ts` deleted (no callers). AuthPromptSheet + Profile guest card share `useGoogleAuth`; Profile's "Continue with Google" signs in directly (one tap, P-03).
+- `components/auth/RequireSignedIn.tsx`: `RequireSignedIn` / `SignedOutScreen` — account-only screens (ChangePassword, DeleteAccount except its final "Request received" step) show a sign-in state if the session ends while open.
+- Replayed like/My List taps are safe since Step 19: actions carry the desired state and check the server first ([[Mobile-API]]).

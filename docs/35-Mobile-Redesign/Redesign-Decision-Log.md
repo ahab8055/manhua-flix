@@ -52,17 +52,25 @@ Status values:
 | D-34 | 2026-11-09 | User started **Step 10**. Stats collapsible + closed by default (Q-08). Display name editable → backend `fullName` on `PATCH /users/me/profile` (approved). No crop lib (resize only). Avatar uploads on Save, old photo deleted only after PATCH succeeds | decided | user | [[Mobile-Profile]] |
 | D-35 | 2026-11-09 | User started **Step 11**; approved backend `status` + `sort` on `/manhuas/search` (+ LIKE escaping). Recents saved only on explicit submit (not on recent/suggestion tap). Sort default Best match with q, Newest without | decided | user | [[Mobile-Search]] |
 | D-37 | 2026-11-11 | User started **Step 14**. Sign up = Name, Email, Password only: no username (server generates via `generateUniqueUsername`, Q-07) and no confirm password (eye + live rules instead). Approved backend: `RegisterDto.username` optional. Consent line (no checkbox) under Google + Create account | decided | user | [[Mobile-Auth]] [[Backend-Auth]] |
+| D-46 | 2026-11-11 | User started **Step 23**: show cached data instead of loading and update lists in place → persisted React Query cache in MMKV (allowlist, page-1 trim, build buster, 3 days), wiped on sign-out. Supersedes D-26's "no persistence" | decided | user | [[ADR-005-persisted-query-cache]] |
+| D-45 | 2026-11-11 | User started **Step 22** (R-40/R-41). Copy rules: watch/episode/series vocabulary, "Ep N" compact vs "Episode N" titles, no raw dev/SDK error text; images decorative by default for TalkBack | decided | user | [[Mobile-UI-Kit]] |
+| D-44 | 2026-11-11 | User started **Step 21**. Native splash logo = launcher M artwork (circle crop) on `#050507`; JS splash removed. Adopted D-15 (priority ≥4 blocks, else flexible + Restart bar) | decided | user | [[Mobile-Theme]] [[In-App-Update]] |
+| D-43 | 2026-11-11 | User started **Step 20** (R-18). One AdMob unit per format (Native + Banner) with optional per-placement env overrides. Grid ads are full-width rows between poster rows (native media ≥120dp). Detail episode-list native deferred | decided | user | [[Mobile-Ads]] |
+| D-42 | 2026-11-11 | User started **Step 19** (R-31). Like/My List actions are **intent-based** (desired state, server checked first) and shared by Detail + Episode; inline query keys banned by lint; views recorded once per session | decided | user | [[Mobile-API]] |
+| D-41 | 2026-11-11 | User started **Step 18** (R-17). Pagination is **opt-in** (`page` → `{data, meta}`, else legacy array) so Play 1.0.4 keeps working. Chapters: app keeps the full list but slim (`fields=list`) instead of paging Detail/Episode | decided | user | [[Backend-API]] |
+| D-40 | 2026-11-11 | User started **Step 17** (R-15). After sign-in without an explicit target the app returns to the screen sign-in started from (not Profile). Profile guest Google is one tap. Account-only screens show a signed-out state instead of a broken form | decided | user | [[Mobile-Auth]] |
+| D-39 | 2026-11-11 | User chose **Step 16 = last legacy screens**: SeeAll paged per collection (sort chips dropped), About + in-app Privacy rebuilt (video host unnamed in policy), ForceUpdate loading + Play fallback; legacy Header/cards/`COLORS` deleted | decided | user | [[Mobile-Settings]] [[In-App-Update]] |
 | D-38 | 2026-11-11 | User started **Step 15** (Comments). Approved backend: optional-auth `myReaction`, `sort=top\|newest`, vote toggle-off, `author.level/avatarUrl`. ⋯ menu = Edit + Delete own (no Report). Replies **one level**, reply-to-reply posts under the parent with @mention. Full-screen Comments route + 3-comment preview on Detail/Episode (not a sheet) | decided | user | [[Mobile-Comments]] |
 | D-36 | 2026-11-09 | User started **Step 12**; approved backend: hide drafts on public channel routes/counts, idempotent subscribe, uploads `sort`. ChannelDetail route = `channelId` + optional preview. One shared `useChannelSubscription` hook | decided | user | [[Mobile-Channels]] |
-| D-15 | 2026-11-08 | Flexible Play update by default; immediate only at priority ≥4 | proposed (affects [[In-App-Update]]) | Claude | [[Redesign-Roadmap]] |
+| D-15 | 2026-11-08 | Flexible Play update by default; immediate only at priority ≥4 | decided 2026-11-11 (Step 21) | Claude | [[Redesign-Roadmap]] |
 
 ## Open questions
 | # | Question | Why it matters | Blocks |
 |---|---|---|---|
 | ~~Q-01~~ | ~~Brand spelling~~ → resolved D-16 (MANHWAFLIX). Store screenshots need re-shoot later | — | — |
 | ~~Q-02~~ | Resolved D-22: type DELETE, no cancel, 7 days | — | — |
-| Q-03 | Privacy Policy URL, Terms URL, support email: user has them, will provide on request | Settings links | R-11 |
-| Q-04 | Deep link domain for App Links + web landing? | Share and deep links | R-50 |
+| ~~Q-03~~ | Resolved 2026-11-11: hosted Privacy + Terms on manhuaflix.hbhammaddyar.com (`/p/privacy-policy.html`, `/p/terms-and-conditions.html`), support email set; all in `.env*` (`PRIVACY_POLICY_URL`, `TERMS_URL`, `SUPPORT_EMAIL`) | — | — |
+| Q-04 | Deep link domain: `manhuaflix.hbhammaddyar.com` is Blogger (no `/.well-known/assetlinks.json`). Proposed: `link.hbhammaddyar.com` on Firebase Hosting (assetlinks + fallback pages); needs subdomain name, Play app-signing + upload SHA-256, fallback target | Share and deep links | R-50 |
 | ~~Q-05~~ | Resolved: `GET /manhuas/search` already paginated; mobile never calls it. Other gaps in R-17 | — | — |
 | ~~Q-06~~ | Resolved D-20: remove tab-bar banner, add inline placements | — | — |
 | ~~Q-07~~ | Resolved D-37: username auto-created by the server, editable in Edit profile | — | — |

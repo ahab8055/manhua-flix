@@ -11,6 +11,8 @@ related: ["[[Backend-MOC]]", "[[Admin-API-Client]]", "[[Mobile-API]]"]
 
 All under `/api`. Guards: **Pub** none · **Auth** `AuthGuard` · **R(x)** `AuthGuard+RolesGuard+@Roles(x)` · **Secret** `x-colab-secret` header = `COLAB_JOB_SECRET`. Most user features allow `user,admin` only — **uploader can't** use favorites/comments/progress.
 
+**Opt-in pagination (D-21/D-41, Step 18):** endpoints that old app builds read as bare arrays — `GET /manhuas`, `/manhuas/featured`, `/manhuas/:id/chapters`, `/watch-progress/me`, `/search-history/me`, `/watch-history/me` — return `{data, meta}` only when `page` is sent (`OptionalPaginationDto`, `limit` ≤100, default 20); otherwise the legacy array. New list endpoints use `PaginationDto` directly.
+
 ## auth `src/auth/`
 `POST /auth/signup-admin` (body `adminSecret`) · `POST /auth/register` · `POST /auth/login` · `POST /auth/google {idToken}` · `POST /auth/refresh` · `POST /auth/forgot-password` · `GET /auth/reset-password?token=` (HTML form) · `POST /auth/reset-password/confirm` — all Pub. `POST /auth/logout` (no-op), `GET /auth/me` — Auth. See [[Backend-Auth]].
 
@@ -18,13 +20,13 @@ All under `/api`. Guards: **Pub** none · **Auth** `AuthGuard` · **R(x)** `Auth
 `GET /users/admin`, `GET /users/admin/list`, `PATCH /users/:id/moderation` (activate/restrict/suspend; not admins/self), `DELETE /users/:id` — R(admin). `GET/PATCH /users/me/profile` (PATCH: `fullName?`, `username?`, `avatarUrl?|null`; taken username → 400 incl. unique-index race), `PATCH /users/me/password`, `DELETE /users/me` (needs password; role user only) — R(user,admin). `GET /users/:id/profile` — Pub.
 
 ## manhuas `src/manhuas/`
-Pub: `GET /manhuas`, `/featured`, `/search` (`q`, `genres` csv AND, `status`, `sort` relevance|newest|popular|title, `page`, `limit`≤50; LIKE wildcards escaped; status-only browse ok — [[Mobile-Search]]), `/suggestions`, `/recommendations`; `GET /manhuas/:id` optional auth. Auth: `GET /:id/like-status`, `POST /:id/like`, `POST /:id/view` (dedup 48h via `manhua_views`). R(admin,uploader): `POST /manhuas`, `GET /manhuas/admin`, `PATCH/DELETE /manhuas/:id`.
+Pub: `GET /manhuas`, `/featured`, `/search` (`q`, `genres` csv AND, `status`, `sort` relevance|newest|popular|title, `page`, `limit`≤50; LIKE wildcards escaped; status-only browse ok; explicit `sort` with no filters browses all published titles (Step 18, [[2026-11-11-seeall-popular-empty]]); no params → empty — [[Mobile-Search]]), `/suggestions`, `/recommendations`; `GET /manhuas/:id` optional auth. Auth: `GET /:id/like-status`, `POST /:id/like`, `POST /:id/view` (dedup 48h via `manhua_views`). R(admin,uploader): `POST /manhuas`, `GET /manhuas/admin`, `PATCH/DELETE /manhuas/:id`.
 - Manhua requires `channelId`; uploader only for channels they own (`ChannelsService.isUserChannelOwner`).
 - Publish (create/update) → `channel_upload_notifications` rows + `notifyManhuaRelease` ([[Notifications]]).
 - Search: `to_tsvector('simple')` + ILIKE, pg_trgm GIN (migrations 0012, 0014), genre filter.
 
 ## chapters `manhuas/:manhuaId/chapters`
-`GET /` Pub (published only). R(admin): `GET /admin`, `GET /admin/list`, `POST /`, `PATCH/DELETE /:chapterId`. `src/chapters/dailymotion.ts` parses `dai.ly/<id>`, `/video/<id>`, `/embed/video/<id>` → embed `…/embed/video/<id>?sharing-enable=false`; `@IsDailymotionVideoUrl`. Publish → `notifyChapterRelease`.
+`GET /` Pub (published only; `order=asc|desc`, `fields=list` = slim rows without `pageUrls`/`isPublished`/`updatedAt`, opt-in `page`/`limit`). R(admin): `GET /admin`, `GET /admin/list`, `POST /`, `PATCH/DELETE /:chapterId`. `src/chapters/dailymotion.ts` parses `dai.ly/<id>`, `/video/<id>`, `/embed/video/<id>` → embed `…/embed/video/<id>?sharing-enable=false`; `@IsDailymotionVideoUrl`. Publish → `notifyChapterRelease`.
 
 ## channels `src/channels/`
 Pub: `GET /channels`, `/channels/:id`, `/channels/:id/manhuas` (`page`, `limit`, `sort` newest|updated|title — updated = latest published episode). Public reads and upload counts exclude unpublished drafts (2026-11-09). R(admin): `POST`, `PATCH /:id`, `POST /:id/owners`, `DELETE /:id/owners/:userId`. R(admin,uploader): `GET /:id/owners`. R(user,admin): `GET /subscribed`, `/recommended`, `/sections`, `POST/DELETE /:id/subscribe` (POST idempotent: repeat returns current state, no 409; push to uploader only on first subscribe), `GET/PATCH /:id/notification-settings`, `PATCH/DELETE /:id/pin`. Owner assign fills `uploaderUserId` if empty.

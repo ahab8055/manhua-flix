@@ -3,7 +3,7 @@ type: note
 area: mobile
 status: draft
 created: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-11
 tags: [mobile, redesign, dashboard]
 related: ["[[Mobile-Redesign-MOC]]", "[[Redesign-Roadmap]]", "[[Redesign-Decision-Log]]"]
 ---
@@ -25,7 +25,7 @@ Turn Manhwaflix (Android, RN 0.83, animated manhua/manhwa recap videos) into a p
 | Approval | User sign-off on prototype + blueprint | ⏳ waiting |
 | P0 Foundation | Fonts, tokens, core components, error/offline/toast infra | 🔄 Step 1 (R-01, R-02) + Step 2 (R-03 UI kit) + Step 3 (R-04..R-06 toast/offline/error boundary/refresh) implemented 2026-11-08 + Step 4 (R-14 session, R-31 cache core, R-15 auth-sheet infra) 2026-11-08 — **P0 foundation complete** |
 | P1 Critical flows | Account deletion, player fallback, search results, auth desync, dead ends | ⬜ proposed |
-| P2 Screen redesigns | Home, Detail, Episode, My List, Search, Channels, Profile/Settings, Auth | 🔄 Step 5 nav shell (R-24), Step 6 Episode player (R-12, R-20), Step 7 Home + Detail (R-21–R-23) implemented 2026-11-08 |
+| P2 Screen redesigns | Home, Detail, Episode, My List, Search, Channels, Profile/Settings, Auth, Notifications, Comments, legacy screens | ✅ Steps 5–16 implemented (2026-11-08 → 2026-11-11); Steps 1–15 device-tested by user; every screen on the kit, legacy theme removed |
 | P3 Polish | Motion, deep links, a11y pass, perf, tests | ⬜ proposed |
 
 Status legend for every task: `proposed → approved → implemented → tested`. Tracked in [[Redesign-Roadmap]].

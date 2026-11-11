@@ -3,7 +3,7 @@ type: note
 area: mobile
 status: draft
 created: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-11
 tags: [mobile, redesign, strategy]
 related: ["[[Mobile-Redesign-MOC]]", "[[Redesign-Design-System]]", "[[Redesign-Visual-References]]", "[[Redesign-User-Flows]]"]
 ---
@@ -205,3 +205,5 @@ Rules: never within 48dp of nav controls, player controls or primary CTAs; alway
 | App open | *(deferred, D-23)* cold start after splash | app-open ad | max 1 / 4 h, never first launch |
 
 Removed: banner above tab bar on every tab; "Loading ad" placeholder copy (slot collapses until loaded).
+
+Status 2026-11-11 (Step 20): all rows implemented except Detail episode-list native (deferred) and the two D-23 deferred formats. Details: [[Mobile-Ads]].
