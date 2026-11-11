@@ -34,3 +34,11 @@ Thumbs.db
 
 # Vercel
 .vercel/
+
+# Obsidian per-user state
+docs/.obsidian/workspace*.json
+docs/.obsidian/cache
+docs/.obsidian/graph.json
+
+# graphify knowledge graph (generated, rebuildable)
+graphify-out/

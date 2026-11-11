@@ -1,0 +1,9 @@
+{
+  "useMarkdownLinks": false,
+  "newLinkFormat": "shortest",
+  "attachmentFolderPath": "_assets",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "80-Sessions",
+  "alwaysUpdateLinks": true,
+  "showFrontmatter": true
+}
