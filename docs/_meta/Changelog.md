@@ -11,6 +11,7 @@ related: ["[[Home]]", "[[Conventions]]"]
 
 Newest first. Format: `- YYYY-MM-DD · area · what changed · [[notes]]`
 
+- 2026-11-11 · meta · Pushed `main` of backend (`546d701`), admin (`4f6a8f9`), mobile (`fe16717`), root (`aa5cded`). User verified all redesign work through Step 15 on a physical device → roadmap rows `tested` · [[Redesign-Roadmap]]
 - 2026-11-11 · meta · All redesign work merged (fast-forward) into local `main`: mobile steps 1–15 (`fe16717`), backend 7 feature branches + comments (`546d701`), admin deletion requests (`4f6a8f9`); root repo commits vault + submodule pointers. Not pushed · [[Redesign-Roadmap]]
 - 2026-11-11 · mobile+backend · Step 15: Comments rebuilt — 3-comment preview on Detail/Episode + full-screen `Comments` route (server Top/Newest, infinite, ad every 8, sticky composer), optimistic votes with toggle-off, edit/delete own, one-level replies with @mention, author sheet with real level bar; backend optional-auth `myReaction`, `sort`, vote toggle-off, author `level/avatarUrl`, deduped comment query + shared rank labels (mobile `fe16717`, backend `546d701`) · [[Mobile-Comments]] [[Backend-API]] [[Redesign-Decision-Log]]
 - 2026-11-11 · meta · graphify auto-sync removed (hook unregistered + deleted); graph refreshed manually by user · [[ADR-004-graphify-auto-sync]] [[Knowledge-Graph]]
